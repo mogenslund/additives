@@ -4,6 +4,8 @@ Addtivies is a collection of useful extensions to [Liquid](https://github.com/mo
 
 It is an ongoing project where maturity of the extensiens might differ. Use what you find useful.
 
+Interact with documents using `blob` and create mindmaps from indented lists.
+
 ```
                given ╮                                                                
                 when ┼ bdd ╮                                                          
