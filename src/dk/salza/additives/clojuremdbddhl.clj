@@ -18,6 +18,8 @@
                                   (and (= ch ":") (re-matches #"[\( \[{\n]" pch)) :type3
                                   (and (= pch "\n") (re-matches #"(Story\:|Given|When|Then|To|As|I want) (?s).*" (string-ahead sl 9))) :type2
                                   (and (= pch "\n") (re-matches #"And (?s).*" (string-ahead sl 9))) :type3
+                                  (or (= ch "┼") (= ch "┤") (= ch "├") (= ch "│") (= ch "─") (= ch "╭")
+                                      (= ch "╮") (= ch "╰") (= ch "╯") (= ch "┬") (= ch "┴")) :type2 
                                   :else face)
           (= face :type1)   (cond (= ch " ") :type2
                                   :else face)
