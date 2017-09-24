@@ -82,7 +82,17 @@ Topic2 ──┤ Center ├─╯        ╰ Subtopic2
 ```
 
 ## Highlight
-Highlight added for Behaviordriven development (Given, When, Then).
+Highlight added for Behaviordriven development (Given, When, Then) and mindmaps.
+
+To use it add Additives to the classpath when starting Liquid and add
+
+    [dk.salza.additives.clojuremdbddhl :as clojuremdbddhl]
+
+to the `:require` section in `.liq` and put
+
+    (editor/set-default-highlighter clojuremdbddhl/next-face)
+
+into the `.liq` as well.
 
 ## Browser
 Experimental browser using Lynx as engine. Requires Lynx to be installed.
