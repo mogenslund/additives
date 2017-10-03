@@ -55,7 +55,6 @@
   (if (or (not (seq? l)) (= (count l) 1))
     (list (str l))
     (let [topic (first l)
-          children (rest l)
           spaces (str/replace topic #"." " ")
           children (concat  (apply concat (map left-sub-tree (rest l))) (list " "))
           n0 (count (take-while #(= (subs % (dec (count %))) " ") children))
@@ -97,7 +96,7 @@
         topic (str (first mm))
         [right0 left0] (split-at (quot (count mm) 2) (rest mm))
         right1 (right-tree (conj right0 topic))
-        left1 (left-tree (conj left0 topic))
+        left1 (left-tree (conj (reverse left0) topic))
         cright (count (take-while #(= (subs % 0 1) " ") right1))
         cleft (count (take-while #(= (subs % (dec (count %))) " ") left1))
         right2 (concat (spaces-list (max 0 (- cleft cright)) (count (first right1))) right1)  
@@ -206,4 +205,3 @@
                 (right 1))]
     (str (parse-right sl "")
          (subs (parse-left sl "") 2))))
-
