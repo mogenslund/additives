@@ -3,12 +3,14 @@
             [dk.salza.liq.tools.cshell :as sh]))
 
 (defn curl
-  [& {:keys [:method :url :data :headers :other]}]
+  [& {:keys [:method :url :data :headers :other :dry]}]
   (let [parameters (concat
                      (list "curl")
-                     (list "-X" (str/upper-case (name method)))
+                     (when method (list "-X" (str/upper-case (name method))))
                      (when data (list "-d" (str/join "&" (for [[k v] data] (str k "=" v))) ))
                      (when headers (apply concat (for [[k v] headers] (list "-H" (str k ": " v) ))))
                      other
                      (list url))]
-    (apply sh/cmd parameters)))
+    (if dry
+      (str/join " " parameters)
+      (apply sh/cmd parameters))))
