@@ -14,3 +14,7 @@
     (if dry
       (str/join " " parameters)
       (apply sh/cmd parameters))))
+
+
+;grep -irlh "curl" --include "*.clj" /home/mogens/m
+;(->> "/home/mogens/m" lsr (lrex #"curl") p)

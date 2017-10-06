@@ -17,12 +17,20 @@
                                   (and (= pch "(") (re-find #"def(n|n-|test|record|protocol|macro)? " (string-ahead sl 13))) :type1
                                   (and (= ch ":") (re-matches #"[\( \[{\n]" pch)) :type3
                                   (and (= pch "\n") (re-matches #"(Story\:|Given|When|Then|To|As|I want) (?s).*" (string-ahead sl 9))) :type2
+                                  (= ch "✔") :green
+                                  (= ch "▢") :yellow
+                                  (= ch "✘") :red
+                                  (and (= pch "\n") (re-matches #"(ok) (?s).*" (string-ahead sl 9))) :green
+                                  (and (= pch "\n") (re-matches #"(na|re) (?s).*" (string-ahead sl 9))) :yellow
+                                  (and (= pch "\n") (re-matches #"(fail|err) (?s).*" (string-ahead sl 9))) :red
                                   (and (= pch "\n") (re-matches #"And (?s).*" (string-ahead sl 9))) :type3
                                   (or (= ch "┼") (= ch "┤") (= ch "├") (= ch "│") (= ch "─") (= ch "╭")
                                       (= ch "╮") (= ch "╰") (= ch "╯") (= ch "┬") (= ch "┴")) :type2 
                                   :else face)
-          (= face :type1)   (cond (= ch " ") :type2
-                                  :else face)
+          (= face :green)   (cond (= ch " ") :plain :else face)
+          (= face :yellow)   (cond (= ch " ") :plain :else face)
+          (= face :red)   (cond (= ch " ") :plain :else face)
+          (= face :type1)   (cond (= ch " ") :type2 :else face)
           (= face :type2)   (cond (and (= ch " ") (not= pch "I")) :plain
                                   :else face)
           (= face :type3)   (cond (re-matches #"[\)\]}\s]" (or ch " ")) :plain
