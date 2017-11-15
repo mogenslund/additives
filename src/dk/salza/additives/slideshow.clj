@@ -32,10 +32,10 @@
     (update-display)))
 
 (def keymap
-  {:cursor-color :green
+  {:cursor-color :off
    :C-w editor/kill-buffer
-   :C-g editor/previous-buffer
-   :esc editor/previous-buffer
+   :C-g editor/previous-real-buffer
+   :esc editor/previous-real-buffer
    :space next-slide
    :right next-slide
    :left previous-slide

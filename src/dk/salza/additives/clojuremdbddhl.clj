@@ -20,6 +20,7 @@
                                   (= ch "✔") :green
                                   (= ch "▢") :yellow
                                   (= ch "✘") :red
+                                  (= ch "•") :green
                                   (= ch "∑") :yellow
                                   (= ch "∘") :yellow
                                   (= ch "√") :yellow
