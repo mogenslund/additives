@@ -1,5 +1,6 @@
 (ns dk.salza.additives.linux
   (:require [clojure.string :as str]
+            [dk.salza.liq.editor :as editor]
             [dk.salza.liq.tools.cshell :as sh]))
 
 (defn curl
@@ -14,6 +15,11 @@
     (if dry
       (str/join " " parameters)
       (apply sh/cmd parameters))))
+
+(defn bash
+  ([line]
+   (sh/cmd "bash" "-c" line))
+  ([] (bash (editor/get-line))))
 
 
 ;grep -irlh "curl" --include "*.clj" /home/mogens/m
