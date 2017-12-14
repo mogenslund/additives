@@ -8,7 +8,7 @@
   (let [parameters (concat
                      (list "curl")
                      (when method (list "-X" (str/upper-case (name method))))
-                     (when data (list "-d" (str/join "&" (for [[k v] data] (str k "=" v))) ))
+                     (when data (list "-d" (str/join "&" (for [[k v] data] (str (name k) "=" (str/replace v #"&" "%26"))))))
                      (when headers (apply concat (for [[k v] headers] (list "-H" (str k ": " v) ))))
                      other
                      (list url))]

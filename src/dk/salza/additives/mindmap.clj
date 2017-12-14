@@ -126,7 +126,7 @@
   [sl]
   (-> sl
       (set-mark "start")
-      (right-until #"\s")
+      (right-until (partial re-find #"\s"))
       (get-region "start")))
 
 (defn- get-left-word
@@ -135,13 +135,13 @@
       (right 1)
       (set-mark "start")
       (left 1)
-      (left-until #"\s")
+      (left-until (partial re-find #"\s"))
       (right 1)
       (get-region "start")))
 
 (defn first-right-child
   [sl]
-  (let [cross (-> sl (right-until #"(┼|┤|─|╮|╯|┬|┴|\n)"))]
+  (let [cross (-> sl (right-until #{"┼" "┤" "─" "╮" "╯" "┬" "┴" "\n"}))]
     (when (and (not (end? cross)) (not= (get-char cross) "\n"))
       (loop [sl0 cross]
         (let [c (get-char sl0)]
@@ -151,7 +151,7 @@
 
 (defn first-left-child
   [sl]
-  (let [cross (-> sl (left-until #"(┼|├|─|╭|╰|┬|┴|\n)"))]
+  (let [cross (-> sl (left-until #{"┼" "├" "─" "╭" "╰" "┬" "┴" "\n"}))]
     (when (and (not (beginning? cross)) (not= (get-char cross) "\n"))
       (loop [sl0 cross]
         (let [c (get-char sl0)]
@@ -205,3 +205,4 @@
                 (right 1))]
     (str (parse-right sl "")
          (subs (parse-left sl "") 2))))
+

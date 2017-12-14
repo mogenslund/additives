@@ -65,7 +65,7 @@
   Get link related to number."
   [sl0]
   (let [text (-> sl0
-                 (left-until #"\[")
+                 (left-until #{"["})
                  (set-mark "start-lynx")
                  end
                  (get-region "start-lynx"))
