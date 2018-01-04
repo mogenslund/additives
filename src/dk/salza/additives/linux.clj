@@ -4,8 +4,10 @@
             [dk.salza.liq.tools.cshell :as sh]))
 
 (defn curl
-  [& {:keys [:method :url :data :headers :other :dry]}]
-  (let [parameters (concat
+  [& args]
+  (let [inputmap (if (map? (first args)) (first args) (apply hash-map args))
+        {:keys [:method :url :data :headers :other :dry]} inputmap
+        parameters (concat
                      (list "curl")
                      (when method (list "-X" (str/upper-case (name method))))
                      (when data (list "-d" (str/join "&" (for [[k v] data] (str (name k) "=" (str/replace v #"&" "%26"))))))
