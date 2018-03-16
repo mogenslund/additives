@@ -1,22 +1,24 @@
 (ns dk.salza.additives.clojuremdbddhl
+  (:require [clojure.string :as str])
   (:use [dk.salza.liq.slider :as slider :exclude [create]]))
 
 (defn next-face
   [sl face]
   (let [ch (get-char sl)
         pch (-> sl left get-char)
-        ppch (-> sl (left 2) get-char)] 
-    (cond (= face :string)  (cond (and (= pch "\"") (= ppch "\\")) face
-                                  (and (= pch "\"") (= ppch "\"")) :plain
-                                  (and (= pch "\"") (re-matches #"[^#\( \[{\n]" ppch)) :plain
-                                  (and (= pch "\"") (re-matches #"[\)\]}]" (or ch " "))) :plain
+        ppch (-> sl (left 2) get-char)
+        s9 (if (= pch "\n") (string-ahead sl 9) "")
+        sw (if (= pch "\n") (fn [s] (str/starts-with? s9 s)) (fn [s] false))] 
+    (cond (= face :stringst) :string
+          (= face :string)  (cond (and (= pch "\"") (= ppch "\\")) face
+                                  (= pch "\"") :plain
                                   :else face)
-          (= face :plain)   (cond (and (= ch "\"") (re-matches #"[#\( \[{\n]" pch)) :string
+          (= face :plain)   (cond (and (= ch "\"") (not= (get-char (right sl)) "\n")) :stringst
                                   (= ch ";") :comment
                                   (and (= ch "#") (or (= pch "\n") (= pch "") (= (get-point sl) 0))) :comment 
                                   (and (= pch "(") (re-find #"def(n|n-|test|record|protocol|macro)? " (string-ahead sl 13))) :type1
                                   (and (= ch ":") (re-matches #"[\( \[{\n]" pch)) :type3
-                                  (and (= pch "\n") (re-matches #"(Story\:|Given|When|Then|To|As|I want) (?s).*" (string-ahead sl 9))) :type2
+                                  (or (sw "Story: ") (sw "Given ") (sw "When ") (sw "Then ") (sw "To ") (sw "As ") (sw "I want ")) :type2
                                   (= ch "✔") :green
                                   (= ch "▢") :yellow
                                   (= ch "✘") :red
@@ -36,10 +38,12 @@
                                   (= ch "≥") :yellow
                                   (= ch "≤") :yellow
                                   (= ch "≠") :yellow
-                                  (and (= pch "\n") (re-matches #"(ok) (?s).*" (string-ahead sl 9))) :green
-                                  (and (= pch "\n") (re-matches #"(na|re) (?s).*" (string-ahead sl 9))) :yellow
-                                  (and (= pch "\n") (re-matches #"(fail|err) (?s).*" (string-ahead sl 9))) :red
-                                  (and (= pch "\n") (re-matches #"And (?s).*" (string-ahead sl 9))) :type3
+                                  (sw "ok ") :green
+                                  (sw "na ") :yellow
+                                  (sw "re ") :yellow
+                                  (sw "fail ") :red
+                                  (sw "err ") :red
+                                  (sw "And ") :type3
                                   (or (= ch "┼") (= ch "┤") (= ch "├") (= ch "│") (= ch "─") (= ch "╭")
                                       (= ch "╮") (= ch "╰") (= ch "╯") (= ch "┬") (= ch "┴")) :type2 
                                   :else face)
