@@ -33,12 +33,12 @@
 
 (def keymap
   {:cursor-color :off
-   :C-w editor/kill-buffer
-   :C-g editor/previous-real-buffer
-   :esc editor/previous-real-buffer
-   :space next-slide
-   :right next-slide
-   :left previous-slide
+   "C-w" editor/kill-buffer
+   "C-g" editor/previous-real-buffer
+   "esc" editor/previous-real-buffer
+   " " next-slide
+   "right" next-slide
+   "left" previous-slide
   })
 
 (defn run
