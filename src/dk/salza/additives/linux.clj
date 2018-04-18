@@ -29,6 +29,10 @@
   [& args]
   (apply sh/cmdseq (concat (list "grep") args)))
 
+(defn locate
+  [s]
+  (str/join "\n" (sh/cmdseq "locate" "--regex" "-l" "50" s)))
+
 (defn bash
   ([line]
    (sh/cmd "bash" "-c" line))
