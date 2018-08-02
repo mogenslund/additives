@@ -17,6 +17,7 @@
                                   (= ch ";") :comment
                                   (and (= ch "#") (or (= pch "\n") (= pch "") (= (get-point sl) 0))) :comment 
                                   (and (= pch "(") (re-find #"def(n|n-|test|record|protocol|macro)? " (string-ahead sl 13))) :type1
+                                  (and (= pch "(") (re-find #"(click|send-keys|ns|sleep|goto|clearfield) " (string-ahead sl 10))) :type2
                                   (and (= ch ":") (re-matches #"[\( \[{\n]" pch)) :type3
                                   (or (sw "Story: ") (sw "Given ") (sw "When ") (sw "Then ") (sw "To ") (sw "As ") (sw "I want ")) :type2
                                   (= ch "✔") :green
