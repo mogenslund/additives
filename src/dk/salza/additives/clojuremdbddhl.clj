@@ -52,7 +52,7 @@
           (= face :yellow)   (cond (= ch " ") :plain :else face)
           (= face :red)   (cond (= ch " ") :plain :else face)
           (= face :type1)   (cond (= ch " ") :type2 :else face)
-          (= face :type2)   (cond (and (= ch " ") (not= pch "I")) :plain
+          (= face :type2)   (cond (and (or (= ch " ") (= ch ")")) (not= pch "I")) :plain
                                   :else face)
           (= face :type3)   (cond (re-matches #"[\)\]}\s]" (or ch " ")) :plain
                                   :else face)
