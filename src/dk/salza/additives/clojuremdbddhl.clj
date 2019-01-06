@@ -23,6 +23,7 @@
                                   (= ch "✔") :green
                                   (= ch "▢") :yellow
                                   (= ch "✘") :red
+                                  (= ch "\r") :red
                                   (= ch "•") :green
                                   (= ch "∑") :yellow
                                   (= ch "∘") :yellow
@@ -50,7 +51,7 @@
                                   :else face)
           (= face :green)   (cond (= ch " ") :plain :else face)
           (= face :yellow)   (cond (= ch " ") :plain :else face)
-          (= face :red)   (cond (= ch " ") :plain :else face)
+          (= face :red)   (cond (or (= ch " ") (= pch "\r")) :plain :else face)
           (= face :type1)   (cond (= ch " ") :type2 :else face)
           (= face :type2)   (cond (and (or (= ch " ") (= ch ")")) (not= pch "I")) :plain
                                   :else face)
