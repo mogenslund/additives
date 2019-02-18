@@ -20,6 +20,8 @@
                                   (and (= pch "(") (re-find #"(click|send-keys|ns|sleep|goto|clearfield) " (string-ahead sl 10))) :type2
                                   (and (= ch ":") (re-matches #"[\( \[{\n]" pch)) :type3
                                   (or (sw "Story: ") (sw "Given ") (sw "When ") (sw "Then ") (sw "To ") (sw "As ") (sw "I want ")) :type2
+                                  (and (= ch "√") (= ppch "\n")) :green
+                                  (and (= ch "×") (= ppch "\n")) :red
                                   (= ch "✔") :green
                                   (= ch "▢") :yellow
                                   (= ch "✘") :red
