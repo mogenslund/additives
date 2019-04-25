@@ -144,9 +144,9 @@
 ;; Load the freemove addon 
 (defn run
   []
-  ;(editor/set-global-key "M-j" #(editor/apply-to-slider move-left))
+  ;(editor/set-global-key "M-h" #(editor/apply-to-slider move-left))
   ;(editor/set-global-key "M-l" #(editor/apply-to-slider move-right))
-  ;(editor/set-global-key "M-i" #(editor/apply-to-slider move-up))
-  ;(editor/set-global-key "M-k" #(editor/apply-to-slider move-down))
+  ;(editor/set-global-key "M-k" #(editor/apply-to-slider move-up))
+  ;(editor/set-global-key "M-j" #(editor/apply-to-slider move-down))
   )
          
