@@ -40,7 +40,6 @@
    "i" #(editor/set-keymap "dk.salza.additives.slideshow.insert")
    "o" #(do (editor/insert-line) (editor/set-keymap "dk.salza.additives.slideshow.insert"))
    "C-w" editor/kill-buffer
-   "C-g" editor/previous-real-buffer
    "esc" editor/previous-real-buffer
    " " next-slide
    "l" next-slide
